@@ -1,6 +1,8 @@
 # shiv_wallpaper
 
-A new Flutter project.
+Lord shiv wallpaper app
+download the app from playstore:
+https://play.google.com/store/apps/details?id=com.sudoStudio.shiv_wallpaper
 
 ## Getting Started
 
