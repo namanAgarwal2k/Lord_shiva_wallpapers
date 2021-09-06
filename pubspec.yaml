@@ -1,0 +1,44 @@
+name: shiv_wallpaper
+description: A new Flutter project.
+
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  adaptive_theme: ^2.2.0
+  cupertino_icons: ^1.0.2
+  firebase_core: ^1.5.0
+  cloud_firestore: ^2.5.0
+ # cached_network_image: ^3.1.0
+  path_provider:
+  wallpaper_manager_flutter: ^0.0.2
+  flutter_cache_manager:
+  internet_connection_checker: ^0.0.1+2
+  overlay_support: ^1.2.1
+  url_launcher:
+  share:
+  image_gallery_saver: ^1.5.0
+  dio: ^4.0.0
+  permission_handler:
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons:
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/Logo.png"
+
+
+flutter:
+
+
+  uses-material-design: true
+ # - assets/logo.png
