@@ -1,7 +1,7 @@
 # shiv_wallpaper
 
-Lord shiv wallpaper app
-download the app from playstore:
+Lord shiv wallpaper app.
+Download the app from playstore:
 https://play.google.com/store/apps/details?id=com.sudoStudio.shiv_wallpaper
 
 ## Getting Started
