@@ -1,7 +1,5 @@
 import 'dart:typed_data';
-//import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -19,9 +17,7 @@ class FullScreen extends StatefulWidget {
 }
 
 class _FullScreenState extends State<FullScreen> {
-  final image;
-
-  _FullScreenState({this.image});
+ 
 
   _save() async {
     var status = await Permission.storage.request();
@@ -58,14 +54,22 @@ class _FullScreenState extends State<FullScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: Colors.white,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,//Color.fromARGB(68, 255, 253, 253),
         title: Text(
           'Lord Shiva',
           style: TextStyle(color: Colors.white),
         ),
         toolbarHeight: 50,
       ),
-      backgroundColor: Colors.white,
       body: Container(
         child: Stack(children: [
           Column(

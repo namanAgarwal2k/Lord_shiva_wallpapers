@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 
+import 'admobile_service.dart';
+
 class AppDrawer extends StatelessWidget {
   openUrl() async {
+    // ignore: deprecated_member_use
     if (await canLaunch(
         "https://sites.google.com/view/shiv-ji-hd-wallpapers/home")) {
+      // ignore: deprecated_member_use
       await launch("https://sites.google.com/view/shiv-ji-hd-wallpapers/home");
     } else {
       throw 'Could not launch Url, please check your connection';
@@ -56,10 +62,10 @@ class AppDrawer extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.share,
               ),
-              title: Text('Share with friends'),
+              title: const Text('Share with friends'),
               onTap: () {
                 Share.share(strAppLink);
               },
@@ -71,6 +77,13 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                 openUrl();
               },
+            ),
+            Divider(),
+            Container(
+              height: AdSize.banner.height.toDouble(),
+              width: AdSize.banner.width.toDouble(),
+              child: AdWidget(
+                  key: UniqueKey(), ad: AdmobService.createBannerAd()..load()),
             ),
           ],
         ),
