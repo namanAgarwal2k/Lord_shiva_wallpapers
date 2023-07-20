@@ -27,7 +27,7 @@ class AdmobService {
 
   static BannerAd createBannerAd() {
     BannerAd ad = new BannerAd(
-      adUnitId: BannerAd.testAdUnitId, // bannerAdUnitId,
+      adUnitId: bannerAdUnitId,
       size: AdSize.banner,
       request: AdRequest(),
       //listener: null,
@@ -65,7 +65,7 @@ class AdmobService {
 
   static createInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: InterstitialAd.testAdUnitId, // iOSInterstitialAdUnitID,
+      adUnitId: iOSInterstitialAdUnitID,
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {

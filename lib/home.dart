@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'admobile_service.dart';
 import 'appDrawer.dart';
 import 'fullscreen.dart';
@@ -19,10 +22,12 @@ class _MyHomePageState extends State<MyHomePage> {
   // late BannerAd _bannerAd;
   // bool _isBannerLoaded = false;
   //
-  // initState() {
-  //   super.initState();
-  //   _initBannerAd();
-  // }
+  initState() {
+    super.initState();
+    AdmobService.createInterstitialAd();
+    // _initBannerAd();
+  }
+
   //
   // _initBannerAd() {
   //   _bannerAd = BannerAd(
@@ -47,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
           //  systemOverlayStyle: Get.isDarkMode
           //     ? SystemUiOverlayStyle.light
@@ -99,14 +105,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.circular(16),
                       child: InkWell(
                         onTap: () async {
-                          await AdmobService.createInterstitialAd();
-                          AdmobService.showInterstitialAd();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FullScreen(
-                                        imageUrl: x['imageUrl'],
-                                      )));
+                          // await AdmobService.createInterstitialAd();
+                          try {
+                            AdmobService.showInterstitialAd();
+                          } finally {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FullScreen(
+                                          imageUrl: x['imageUrl'],
+                                        )));
+                          }
                         },
                         child: ImageWidget(
                           imageUrl: x['imageUrl'],
@@ -128,13 +137,12 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: AdSize.banner != null
           // AdmobService.bannerAd != null
           ? Container(
-              color: Colors.transparent,
+              color: Color.fromARGB(100, 22, 44, 33),
               child: AdWidget(
                 key: UniqueKey(),
-                ad: AdmobService.createBannerAd()..load(), //_bannerAd,
+                ad: AdmobService.createBannerAd()..load(),
               ),
-              height: AdSize.banner.height
-                  .toDouble(), // AdmobService.bannerAdUnitId..height.toDouble(),
+              height: AdSize.banner.height.toDouble(),
               width: AdSize.banner.width.toDouble(),
             )
           : SizedBox(),
@@ -151,31 +159,36 @@ class ImageWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
-          frameBuilder: (BuildContext context, Widget child, int? frame,
-              bool wasSynchronouslyLoaded) {
-            if (wasSynchronouslyLoaded) {
-              return child;
-            }
-            return AnimatedOpacity(
-              opacity: frame == null ? 0 : 1,
-              duration: const Duration(seconds: 1),
-              curve: Curves.easeOut,
-              child: child,
-            );
-          },
-          errorBuilder:
-              (BuildContext context, Object exception, StackTrace? stackTrace) {
-            return Center(
-              child: const Text(
-                ' check your Internet Connection! \n😢',
-                textAlign: TextAlign.center,
-              ),
-            );
-          },
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          fadeInDuration: Duration(milliseconds: 0),
+          fadeOutDuration: Duration(milliseconds: 0),
         ),
+        // Image.network(
+        //   imageUrl,
+        //   fit: BoxFit.cover,
+        //   frameBuilder: (BuildContext context, Widget child, int? frame,
+        //       bool wasSynchronouslyLoaded) {
+        //     if (wasSynchronouslyLoaded) {
+        //       return child;
+        //     }
+        //     return AnimatedOpacity(
+        //       opacity: frame == null ? 0 : 1,
+        //       duration: const Duration(seconds: 1),
+        //       curve: Curves.easeOut,
+        //       child: child,
+        //     );
+        //   },
+        //   errorBuilder:
+        //       (BuildContext context, Object exception, StackTrace? stackTrace) {
+        //     return Center(
+        //       child: const Text(
+        //         ' check your Internet Connection! \n😢',
+        //         textAlign: TextAlign.center,
+        //       ),
+        //     );
+        //   },
+        // ),
       ),
     );
   }
