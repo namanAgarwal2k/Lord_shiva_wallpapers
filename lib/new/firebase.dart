@@ -11,10 +11,9 @@ final firebaseProvider =
 // final prov = FutureProvider((ref) => Firebase(List<String>.empty()));
 
 class Firebase extends StateNotifier<State> {
-
   StreamSubscription<QuerySnapshot>? subscription;
 
-  Firebase(State state) : super(state){
+  Firebase(State state) : super(state) {
     initialize();
   }
 
@@ -77,5 +76,4 @@ class StreamClass {
       controller.add(list);
     });
   }
-
 }

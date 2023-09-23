@@ -34,7 +34,7 @@ if (keystorePropertiesFile.exists()) {
 
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 34
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -42,8 +42,8 @@ android {
 
     defaultConfig {
         applicationId "com.sudoStudio.shiv_wallpaper"
-        minSdkVersion  19
-        targetSdkVersion 31
+        minSdkVersion  23
+        targetSdkVersion 34
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

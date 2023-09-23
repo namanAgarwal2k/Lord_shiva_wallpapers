@@ -2,10 +2,10 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 
 class FullScreen extends StatefulWidget {
   final imageUrl;
@@ -32,15 +32,15 @@ class _FullScreenState extends State<FullScreen> {
   }
 
   setWallpaper() async {
-    int location = WallpaperManagerFlutter.HOME_SCREEN;
+    int location = WallpaperManager.HOME_SCREEN;
     var file = await DefaultCacheManager().getSingleFile(widget.imageUrl);
-    WallpaperManagerFlutter().setwallpaperfromFile(file, location);
+    WallpaperManager.setWallpaperFromFile(file.path, location);
   }
 
   setLockScreen() async {
-    int location = WallpaperManagerFlutter.LOCK_SCREEN;
+    int location = WallpaperManager.LOCK_SCREEN;
     var file = await DefaultCacheManager().getSingleFile(widget.imageUrl);
-    WallpaperManagerFlutter().setwallpaperfromFile(file, location);
+    WallpaperManager.setWallpaperFromFile(file.path, location);
   }
 
   @override
