@@ -5,11 +5,13 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'new/firebase_notifications.dart';
 import 'new/homepage.dart';
+import 'new/notification.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // await FirebaseApi().initNotifications();
+  await FirebaseApi().initNotifications();
   runApp(const ProviderScope(child: OverlaySupport.global(child: MyApp())));
 }
 
@@ -42,7 +44,11 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,
+            navigatorKey: navigatorKey,
             title: 'Lord Shiv HD New Wallpapers ',
+            routes: {
+              NotificationScreen.route: (context) => const NotificationScreen()
+            },
             home: FutureBuilder(
                 future: internetChecker(),
                 builder: (context, status) {

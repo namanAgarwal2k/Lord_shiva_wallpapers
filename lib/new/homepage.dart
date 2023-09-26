@@ -5,6 +5,7 @@ import '../main.dart';
 import 'appDrawer.dart';
 import 'firebase.dart';
 import 'fullscreen.dart';
+import 'notification.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,7 +37,14 @@ class HomePage extends HookConsumerWidget {
                         MyApp.themeNotifier.value == ThemeMode.light
                             ? ThemeMode.dark
                             : ThemeMode.light;
-                  })
+                  }),
+              IconButton(
+                  onPressed: () {
+                    navigatorKey.currentState?.pushNamed(
+                      NotificationScreen.route,
+                    );
+                  },
+                  icon: Icon(Icons.notifications))
             ]),
         drawer: AppDrawer(),
         body: watchState.when(
@@ -51,6 +59,7 @@ class HomePage extends HookConsumerWidget {
               ),
               itemBuilder: (context, index) {
                 String imgPath = data[index]!['imageUrl'];
+
                 return InkWell(
                   onTap: () {
                     Navigator.push(
