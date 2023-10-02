@@ -1,28 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
-//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:share/share.dart';
-
-// import 'admobile_service.dart';
 
 class AppDrawer extends StatelessWidget {
-  // final Uri url =
-  //     Uri.parse("https://sites.google.com/view/shiv-ji-hd-wallpapers/home");
-  // Future<void> openUrl() async {
-  //   if (!await launchUrl(
-  //     url,
-  //     mode: LaunchMode.externalApplication,
-  //   )) {
-  //     throw Exception('Could not launch $url');
-  //   }
-  // }
-  openUrl() async {
+  openUrl(String url) async {
     // ignore: deprecated_member_use
-    if (await canLaunch(
-        "https://sites.google.com/view/shiv-ji-hd-wallpapers/home")) {
+    if (await canLaunch(url)) {
       // ignore: deprecated_member_use
-      await launch("https://sites.google.com/view/shiv-ji-hd-wallpapers/home");
+      await launch(url);
     } else {
       throw 'Could not launch Url, please check your connection';
     }
@@ -39,11 +23,8 @@ class AppDrawer extends StatelessWidget {
       //strAppLink = "market://details?id=" + appPackageName;
     } catch (error) {
       throw 'Sorry, could not launch Url, might be server error!';
-      // strAppLink =
-      //     "https://play.google.com/store/apps/details?id=" + appPackageName;
     }
-    // print(strAppLink);
-    // print(appPackageName);
+
     return Drawer(
       child: Container(
         color: Colors.white,
@@ -71,12 +52,21 @@ class AppDrawer extends StatelessWidget {
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(
-                Icons.share,
-              ),
-              title: const Text('Share with friends'),
+              leading: const Icon(Icons.home_outlined),
+              title: const Text('Home'),
               onTap: () {
-                Share.share(strAppLink);
+                Navigator.of(context).pop();
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: const Icon(
+                Icons.star_rate,
+              ),
+              title: const Text('Rate Us'),
+              onTap: () {
+                openUrl(strAppLink);
+                // Share.share(strAppLink);
               },
             ),
             const Divider(),
@@ -84,7 +74,8 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.privacy_tip_outlined),
               title: const Text('Privacy Policy'),
               onTap: () {
-                openUrl();
+                openUrl(
+                    'https://sites.google.com/view/shiv-ji-hd-wallpapers/home');
               },
               selectedTileColor: Colors.red,
             ),

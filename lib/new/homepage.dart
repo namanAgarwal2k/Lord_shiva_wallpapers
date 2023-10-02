@@ -5,7 +5,7 @@ import '../main.dart';
 import 'appDrawer.dart';
 import 'firebase.dart';
 import 'fullscreen.dart';
-import 'notification.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,28 +38,45 @@ class HomePage extends HookConsumerWidget {
                             ? ThemeMode.dark
                             : ThemeMode.light;
                   }),
-              IconButton(
-                  onPressed: () {
-                    navigatorKey.currentState?.pushNamed(
-                      NotificationScreen.route,
-                    );
-                  },
-                  icon: Icon(Icons.notifications))
+              // IconButton(
+              //     onPressed: () {
+              //       navigatorKey.currentState?.pushNamed(
+              //         NotificationScreen.route,
+              //       );
+              //     },
+              //     icon: Icon(Icons.notifications))
             ]),
         drawer: AppDrawer(),
         body: watchState.when(
           data: (data) {
-            return GridView.builder(
+            return StaggeredGridView.countBuilder(
               itemCount: data.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.7,
-                crossAxisSpacing: 1.0,
-                mainAxisSpacing: 1.0,
-              ),
+              crossAxisCount: 2,
+
+              // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //   crossAxisCount: 2,
+              //   childAspectRatio: 0.7,
+              //   crossAxisSpacing: 1.0,
+              //   mainAxisSpacing: 1.0,
+              // ),
+              staggeredTileBuilder: (int index) {
+                if (index % 40 == 0 && index != 0) {
+                  // Set the ad tile to span two columns and one row
+                  return StaggeredTile.count(2, 1);
+                } else {
+                  // Set the grid item tile to span one column and one row
+                  return StaggeredTile.count(1, 1.6);
+                }
+              },
               itemBuilder: (context, index) {
                 String imgPath = data[index]!['imageUrl'];
-
+                // if (index % 40 == 0 && index != 0) {
+                //   // Insert ad widget after every fifth item
+                //   return Container(
+                //     height: 30,
+                //     color: Colors.green,
+                //   );
+                // } else {
                 return InkWell(
                   onTap: () {
                     Navigator.push(
@@ -92,6 +109,7 @@ class HomePage extends HookConsumerWidget {
                     ),
                   ),
                 );
+                // }
               },
             );
           },
