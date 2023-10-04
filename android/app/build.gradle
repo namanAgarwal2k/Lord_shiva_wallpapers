@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '6'
+    flutterVersionCode = '7'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '3.0'
+    flutterVersionName = '3.1'
 }
 
 apply plugin: 'com.android.application'
@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "com.sudoStudio.shiv_wallpaper"
-        minSdkVersion  23
+        minSdkVersion  21
         targetSdkVersion 34
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
@@ -74,6 +74,5 @@ dependencies {
     implementation "androidx.multidex:multidex:2.0.1"
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
-    //  implementation 'com.google.android.gms:play-services-ads:20.3.0'
 
 }

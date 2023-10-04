@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.sudoStudio.shiv_wallpaper">
+    package="com.sudoStudio.shiv_wallpaper"
+    android:versionCode="7">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -57,10 +58,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
-<!--    <meta-data-->
-<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
-<!--            android:value="ca-app-pub-5855901900811320~3399906880"/>-->
    
     </application>
 </manifest>
