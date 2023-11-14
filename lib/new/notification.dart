@@ -12,7 +12,7 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: Container(
         child: Center(
-          child: message == null
+          child: message != null
               ? Column(
                   children: [
                     SizedBox(

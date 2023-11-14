@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -10,6 +11,10 @@ import 'new/notification.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+  MobileAds.instance.updateRequestConfiguration(RequestConfiguration(
+      testDeviceIds: ['A46371809673D36633BF23D110F015B4']));
+  //working['5604DD3357FF120D29C049404A5F25B9']));
   await Firebase.initializeApp();
   await FirebaseApi().initNotifications();
   runApp(const ProviderScope(child: OverlaySupport.global(child: MyApp())));

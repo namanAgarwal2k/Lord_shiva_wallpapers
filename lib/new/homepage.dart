@@ -1,17 +1,55 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shiv_wallpaper/ad_helper/ad_helper.dart';
 import '../main.dart';
 import 'appDrawer.dart';
 import 'firebase.dart';
 import 'fullscreen.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class HomePage extends HookConsumerWidget {
+class HomePage extends StatefulHookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  BannerAd? _ad;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    BannerAd(
+      adUnitId: 'ca-app-pub-5328933201523290/5976909540',
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _ad = ad as BannerAd;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          // Releases an ad resource when it fails to load
+          ad.dispose();
+          print('Ad load failed (code=${error.code} message=${error.message})');
+        },
+      ),
+    ).load();
+  }
+
+  @override
+  void dispose() {
+    _ad?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // final watchState = ref.watch(firebaseProvider);
     final watchState = ref.watch(streamProvider);
 
@@ -70,46 +108,48 @@ class HomePage extends HookConsumerWidget {
               },
               itemBuilder: (context, index) {
                 String imgPath = data[index]!['imageUrl'];
-                // if (index % 40 == 0 && index != 0) {
-                //   // Insert ad widget after every fifth item
-                //   return Container(
-                //     height: 30,
-                //     color: Colors.green,
-                //   );
-                // } else {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Fullscreen(
-                                  url: imgPath,
-                                )));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: CachedNetworkImage(
-                        maxHeightDiskCache: 400,
-                        maxWidthDiskCache: 280,
-                        fit: BoxFit.cover,
-                        imageUrl: imgPath,
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) => Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(58.0),
-                            child: LinearProgressIndicator(
-                                value: downloadProgress.progress),
+                if (index % 40 == 0 && index != 0) {
+                  // Insert ad widget after every fifth item
+                  return Container(
+                    width: _ad!.size.width.toDouble(),
+                    height: 72.0,
+                    alignment: Alignment.center,
+                    child: AdWidget(ad: _ad!),
+                  );
+                } else {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Fullscreen(
+                                    url: imgPath,
+                                  )));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: CachedNetworkImage(
+                          maxHeightDiskCache: 400,
+                          maxWidthDiskCache: 280,
+                          fit: BoxFit.cover,
+                          imageUrl: imgPath,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(58.0),
+                              child: LinearProgressIndicator(
+                                  value: downloadProgress.progress),
+                            ),
                           ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
                       ),
                     ),
-                  ),
-                );
-                // }
+                  );
+                }
               },
             );
           },

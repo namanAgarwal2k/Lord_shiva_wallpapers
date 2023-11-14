@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<!--    <uses-permission android:name="android.permission.BLUETOOTH" />-->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+
 
 
 
@@ -13,6 +17,7 @@
         android:requestLegacyExternalStorage="true"
         android:label="Lord Shiva HD New wallpapers"
         android:icon="@mipmap/ic_launcher">
+
         <activity
             android:exported="true"
             android:name=".MainActivity"
@@ -24,7 +29,8 @@
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
-                 to determine the Window background behind the Flutter UI. -->
+
+                to determine the Window background behind the Flutter UI. -->
             <meta-data
               android:name="com.google.messaging.default_notification_icon"
               android:resource="@drawable/ic_notification"
@@ -48,6 +54,9 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
+            
+<!--            <!– Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 –>-->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -58,6 +67,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-   
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
     </application>
 </manifest>
