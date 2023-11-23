@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shiv_wallpaper/ad_helper/ad_helper.dart';
+import 'package:shiv_wallpaper/ad_helper/native_ad_widget.dart';
 import '../main.dart';
 import 'appDrawer.dart';
 import 'firebase.dart';
@@ -17,40 +17,8 @@ class HomePage extends StatefulHookConsumerWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  BannerAd? _ad;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    BannerAd(
-      adUnitId: 'ca-app-pub-5328933201523290/5976909540',
-      size: AdSize.banner,
-      request: AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (ad) {
-          setState(() {
-            _ad = ad as BannerAd;
-          });
-        },
-        onAdFailedToLoad: (ad, error) {
-          // Releases an ad resource when it fails to load
-          ad.dispose();
-          print('Ad load failed (code=${error.code} message=${error.message})');
-        },
-      ),
-    ).load();
-  }
-
-  @override
-  void dispose() {
-    _ad?.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    // final watchState = ref.watch(firebaseProvider);
     final watchState = ref.watch(streamProvider);
 
     return Scaffold(
@@ -90,17 +58,12 @@ class _HomePageState extends ConsumerState<HomePage> {
             return StaggeredGridView.countBuilder(
               itemCount: data.length,
               crossAxisCount: 2,
-
-              // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //   crossAxisCount: 2,
-              //   childAspectRatio: 0.7,
-              //   crossAxisSpacing: 1.0,
-              //   mainAxisSpacing: 1.0,
-              // ),
               staggeredTileBuilder: (int index) {
-                if (index % 40 == 0 && index != 0) {
+                if ((index % (data.length - 1) == 0 ||
+                        index % (data.length / 2).round() == 0) &&
+                    index != 0) {
                   // Set the ad tile to span two columns and one row
-                  return StaggeredTile.count(2, 1);
+                  return StaggeredTile.count(2, 1.85);
                 } else {
                   // Set the grid item tile to span one column and one row
                   return StaggeredTile.count(1, 1.6);
@@ -108,14 +71,10 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
               itemBuilder: (context, index) {
                 String imgPath = data[index]!['imageUrl'];
-                if (index % 40 == 0 && index != 0) {
-                  // Insert ad widget after every fifth item
-                  return Container(
-                    width: _ad!.size.width.toDouble(),
-                    height: 72.0,
-                    alignment: Alignment.center,
-                    child: AdWidget(ad: _ad!),
-                  );
+                if ((index % (data.length - 1) == 0 ||
+                        index % (data.length / 2).round() == 0) &&
+                    index != 0) {
+                  return NativeAdWidget();
                 } else {
                   return InkWell(
                     onTap: () {
