@@ -17,6 +17,87 @@ class HomePage extends StatefulHookConsumerWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  InterstitialAd? _interstitialAd;
+  bool interstitialAdLoaded = false;
+  late NativeAdWidget nativeAdWidget;
+
+  // TODO: replace this test ad unit with your own ad unit.
+  final adUnitId = 'ca-app-pub-5328933201523290/2099069206';
+
+  @override
+  void initState() {
+    loadInterstitialAd();
+    nativeAdWidget = NativeAdWidget();
+    super.initState();
+  }
+
+  /// Loads an interstitial ad.
+  void loadInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            setState(() {
+              _interstitialAd = ad;
+              interstitialAdLoaded = true;
+            });
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+
+  void _showInterstitialAd(String imgPath) {
+    if (interstitialAdLoaded) {
+      _interstitialAd?.show();
+      _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+        onAdShowedFullScreenContent: (ad) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Fullscreen(
+                      url: imgPath,
+                    )),
+          );
+          loadInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          print('Interstitial Ad failed to show: $error');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Fullscreen(
+                      url: imgPath,
+                    )),
+          );
+        },
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Fullscreen(
+                  url: imgPath,
+                )),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    setState(() {
+      _interstitialAd?.dispose();
+      interstitialAdLoaded = false;
+    });
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final watchState = ref.watch(streamProvider);
@@ -59,9 +140,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               itemCount: data.length,
               crossAxisCount: 2,
               staggeredTileBuilder: (int index) {
-                if ((index % (data.length - 1) == 0 ||
-                        index % (data.length / 2).round() == 0) &&
-                    index != 0) {
+                if ((index % (data.length - 1) == 0) && index != 0) {
                   // Set the ad tile to span two columns and one row
                   return StaggeredTile.count(2, 1.85);
                 } else {
@@ -71,27 +150,20 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
               itemBuilder: (context, index) {
                 String imgPath = data[index]!['imageUrl'];
-                if ((index % (data.length - 1) == 0 ||
-                        index % (data.length / 2).round() == 0) &&
-                    index != 0) {
-                  return NativeAdWidget();
+                if ((index % (data.length - 1) == 0) && index != 0) {
+                  return nativeAdWidget;
                 } else {
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Fullscreen(
-                                    url: imgPath,
-                                  )));
+                      _showInterstitialAd(imgPath);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
                         child: CachedNetworkImage(
-                          maxHeightDiskCache: 400,
-                          maxWidthDiskCache: 280,
+                          maxHeightDiskCache: 340,
+                          maxWidthDiskCache: 240,
                           fit: BoxFit.cover,
                           imageUrl: imgPath,
                           progressIndicatorBuilder:

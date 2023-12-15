@@ -5,16 +5,23 @@ class NativeAdWidget extends StatefulWidget {
   const NativeAdWidget({Key? key}) : super(key: key);
 
   @override
-  State<NativeAdWidget> createState() => _NativeAdWidgetState();
+  State<NativeAdWidget> createState() => NativeAdWidgetState();
 }
 
-class _NativeAdWidgetState extends State<NativeAdWidget> {
+class NativeAdWidgetState extends State<NativeAdWidget> {
   bool adLoaded = false;
   NativeAd? _ad;
 
   @override
   void initState() {
     super.initState();
+    if (adLoaded == false) {
+      loadNativeAd();
+    }
+  }
+
+  //we want to load ad before widget call, using key for it
+  void loadNativeAd() {
     _ad = NativeAd(
       adUnitId:
           // 'ca-app-pub-3940256099942544/2247696110',
@@ -23,6 +30,7 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
       request: AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
+          print('Native ad loaded successfully');
           setState(() {
             _ad = ad as NativeAd;
             adLoaded = true;
@@ -40,7 +48,7 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
 
   @override
   void dispose() {
-    // adLoaded = false;
+    adLoaded = false;
     _ad?.dispose();
     super.dispose();
   }

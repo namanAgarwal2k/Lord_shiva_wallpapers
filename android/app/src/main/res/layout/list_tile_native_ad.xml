@@ -45,12 +45,15 @@
             <ImageView
                 android:id="@+id/native_ad_icon"
                 android:layout_width="60dp"
-                android:layout_height="60dp">
+                android:layout_marginRight="4dp"
+                android:layout_height="58dp">
             </ImageView>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:paddingStart="6dp"
+                android:layout_height="match_parent"
+                tools:ignore="RtlSymmetry">
             <TextView
                 android:id="@+id/native_ad_headline"
                 android:layout_width="wrap_content"
@@ -79,6 +82,7 @@
                 android:id="@+id/native_ad_button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_margin="3.8dp"
                 android:background="#0070BA"
                 android:text="Install"
                 android:textAllCaps="true"

@@ -19,12 +19,12 @@ void optionDialog({
 }
 
 class OptionsPage extends StatefulWidget {
-  const OptionsPage(
-      {Key? key,
-      this.onPressedFirst,
-      this.onPressedSecond,
-      this.onPressedThird})
-      : super(key: key);
+  const OptionsPage({
+    Key? key,
+    this.onPressedFirst,
+    this.onPressedSecond,
+    this.onPressedThird,
+  }) : super(key: key);
   final VoidCallback? onPressedFirst;
   final VoidCallback? onPressedSecond;
   final VoidCallback? onPressedThird;
