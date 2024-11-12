@@ -62,6 +62,7 @@ class NativeAdWidgetState extends State<NativeAdWidget> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(15)),
+                border: Border.all(color: Colors.black),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
@@ -80,7 +81,7 @@ class NativeAdWidgetState extends State<NativeAdWidget> {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.25),
-                border: Border.all(color: Colors.amberAccent),
+                border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
               alignment: Alignment.center,

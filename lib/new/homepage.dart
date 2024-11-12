@@ -105,12 +105,12 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
         appBar: AppBar(
             toolbarHeight: 50,
-            title: const Center(
+            title: Center(
               child: Text(
                 'Jai BholeNath',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    color: Colors.white,
+                    color: Colors.blue,
                     letterSpacing: 1),
               ),
             ),
