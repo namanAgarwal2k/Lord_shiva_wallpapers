@@ -86,7 +86,7 @@ class NativeAdWidgetState extends State<NativeAdWidget> {
               ),
               alignment: Alignment.center,
               child: Text(
-                'Ad is Loading..',
+                'Ad will appear here',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 22,

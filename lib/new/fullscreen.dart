@@ -69,7 +69,7 @@ class Fullscreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10.0),
                                     side: BorderSide(color: Colors.amber))),
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red)),
+                            MaterialStateProperty.all<Color>(Colors.blue)),
                     onPressed: () {
                       optionDialog(
                         context: context,
@@ -86,39 +86,6 @@ class Fullscreen extends StatelessWidget {
                           toast('Saved in gallery successfully');
                         },
                       );
-                      // showModalBottomSheet(
-                      //     context: context,
-                      //     builder: (context) {
-                      //       return Column(
-                      //           mainAxisSize: MainAxisSize.min,
-                      //           children: <Widget>[
-                      //             ListTile(
-                      //               //   leading: new Icon(Icons.photo),
-                      //               title: const Center(
-                      //                   child: Text('Set as HomeScreen')),
-                      //               onTap: () {
-                      //                 setWallpaper();
-                      //                 toast('Set as HomeScreen successfully');
-                      //               },
-                      //             ),
-                      //             ListTile(
-                      //               title: const Center(
-                      //                   child: Text('Set as LockScreen')),
-                      //               onTap: () {
-                      //                 setLockScreen();
-                      //                 toast('Set as LockScreen successfully');
-                      //               },
-                      //             ),
-                      //             ListTile(
-                      //               title:
-                      //                   const Center(child: Text('Download')),
-                      //               onTap: () {
-                      //                 _save();
-                      //                 toast('Saved in gallery successfully');
-                      //               },
-                      //             ),
-                      //           ]);
-                      //     });
                     },
                     child: const Text(
                       'Set',

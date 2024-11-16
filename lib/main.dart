@@ -4,6 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:upgrader/upgrader.dart';
 import 'new/firebase_notifications.dart';
 import 'new/homepage.dart';
 import 'new/notification.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __) {
           return MaterialApp(
-            theme: ThemeData(primarySwatch: Colors.amber),
+            theme: ThemeData(primarySwatch: Colors.blue),
             debugShowCheckedModeBanner: false,
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,
@@ -54,26 +55,29 @@ class MyApp extends StatelessWidget {
             routes: {
               NotificationScreen.route: (context) => const NotificationScreen()
             },
-            home: FutureBuilder(
-                future: internetChecker(),
-                builder: (context, status) {
-                  if (status.data == true) {
-                    return const HomePage();
-                  } else {
-                    return const Center(
-                      child: Card(
-                        color: Colors.black,
-                        child: Text(
-                          ':::: JAI BHOLENATH :::',
-                          style: TextStyle(
-                              fontSize: 28,
-                              letterSpacing: 2,
-                              color: Colors.greenAccent),
+            home: UpgradeAlert(
+              showIgnore: false,
+              child: FutureBuilder(
+                  future: internetChecker(),
+                  builder: (context, status) {
+                    if (status.data == true) {
+                      return const HomePage();
+                    } else {
+                      return const Center(
+                        child: Card(
+                          color: Colors.black,
+                          child: Text(
+                            ':::: JAI BHOLENATH :::',
+                            style: TextStyle(
+                                fontSize: 28,
+                                letterSpacing: 2,
+                                color: Colors.greenAccent),
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                }),
+                      );
+                    }
+                  }),
+            ),
           );
         });
   }

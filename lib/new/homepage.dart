@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shiv_wallpaper/ad_helper/native_ad_widget.dart';
 import '../main.dart';
 import 'appDrawer.dart';
 import 'firebase.dart';
@@ -19,7 +18,7 @@ class HomePage extends StatefulHookConsumerWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   InterstitialAd? _interstitialAd;
   bool interstitialAdLoaded = false;
-  late NativeAdWidget nativeAdWidget;
+  // late NativeAdWidget nativeAdWidget;
 
   // TODO: replace this test ad unit with your own ad unit.
   final adUnitId = 'ca-app-pub-5328933201523290/2099069206';
@@ -27,7 +26,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     loadInterstitialAd();
-    nativeAdWidget = NativeAdWidget();
+    // nativeAdWidget = NativeAdWidget();
     super.initState();
   }
 
@@ -142,7 +141,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               staggeredTileBuilder: (int index) {
                 if ((index % (data.length - 1) == 0) && index != 0) {
                   // Set the ad tile to span two columns and one row
-                  return StaggeredTile.count(2, 1.85);
+                  return StaggeredTile.count(2, 3.2); //2, 1.85
                 } else {
                   // Set the grid item tile to span one column and one row
                   return StaggeredTile.count(1, 1.6);
@@ -150,37 +149,37 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
               itemBuilder: (context, index) {
                 String imgPath = data[index]!['imageUrl'];
-                if ((index % (data.length - 1) == 0) && index != 0) {
-                  return nativeAdWidget;
-                } else {
-                  return InkWell(
-                    onTap: () {
-                      _showInterstitialAd(imgPath);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: CachedNetworkImage(
-                          maxHeightDiskCache: 340,
-                          maxWidthDiskCache: 240,
-                          fit: BoxFit.cover,
-                          imageUrl: imgPath,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(58.0),
-                              child: LinearProgressIndicator(
-                                  value: downloadProgress.progress),
-                            ),
+                // if ((index % (data.length - 1) == 0) && index != 0) {
+                //   return nativeAdWidget;
+                // } else
+                // {
+                return InkWell(
+                  onTap: () {
+                    _showInterstitialAd(imgPath);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: CachedNetworkImage(
+                        maxHeightDiskCache: 340,
+                        maxWidthDiskCache: 240,
+                        fit: BoxFit.cover,
+                        imageUrl: imgPath,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(58.0),
+                            child: LinearProgressIndicator(
+                                value: downloadProgress.progress),
                           ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
                         ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
-                  );
-                }
+                  ),
+                );
               },
             );
           },

@@ -20,12 +20,12 @@ if (localPropertiesFile.exists()) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '10'
+    flutterVersionCode = '13'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '3.5'
+    flutterVersionName = '3.7'
 }
 
 
@@ -50,7 +50,7 @@ android {
 
     defaultConfig {
         applicationId "com.sudoStudio.shiv_wallpaper"
-        minSdkVersion  21
+        minSdkVersion  24
         targetSdkVersion 34
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()

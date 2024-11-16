@@ -32,6 +32,13 @@ class OptionsPage extends StatefulWidget {
   State<OptionsPage> createState() => _OptionsPageState();
 }
 
+ButtonStyle buttonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: Colors.amber))));
+
 class _OptionsPageState extends State<OptionsPage> {
   @override
   Widget build(BuildContext context) {
@@ -50,11 +57,7 @@ class _OptionsPageState extends State<OptionsPage> {
             child: Column(
               children: [
                 ElevatedButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(color: Colors.red)))),
+                  style: buttonStyle,
                   onPressed: widget.onPressedFirst,
                   child: Text(
                     'Set As HomeScreen',
@@ -65,11 +68,7 @@ class _OptionsPageState extends State<OptionsPage> {
                   height: 8,
                 ),
                 ElevatedButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(color: Colors.red)))),
+                  style: buttonStyle,
                   onPressed: widget.onPressedSecond,
                   child: Text(
                     'Set As LockScreen',
@@ -80,11 +79,7 @@ class _OptionsPageState extends State<OptionsPage> {
                   height: 8,
                 ),
                 ElevatedButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(color: Colors.red)))),
+                  style: buttonStyle,
                   onPressed: widget.onPressedThird,
                   child: Text(
                     'Download',
