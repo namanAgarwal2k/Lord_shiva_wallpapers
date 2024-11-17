@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+//todo in future remove native ad design from code it is causing error in ad mob
+
 class NativeAdWidget extends StatefulWidget {
   const NativeAdWidget({Key? key}) : super(key: key);
 

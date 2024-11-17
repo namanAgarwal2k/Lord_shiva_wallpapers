@@ -92,7 +92,7 @@ class _OptionsPageState extends State<OptionsPage> {
           SizedBox(
             height: 10,
           ),
-          SizedBox(height: 370, width: 400, child: NativeAdWidget())
+          // SizedBox(height: 370, width: 400, child: NativeAdWidget())
         ],
       ),
     );
